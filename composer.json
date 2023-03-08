@@ -1,0 +1,16 @@
+{
+  "name": "crochetfeve0251/rocket-launcher-core",
+  "description": "Core from Rocket launcher",
+  "keywords": [
+    "wordpress"
+  ],
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "CrochetFeve0251"
+    }
+  ],
+  "require": {
+    "league/container": "^3.3"
+  }
+}
