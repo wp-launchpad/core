@@ -16,15 +16,15 @@ defined( 'ABSPATH' ) || exit;
  */
 function boot(string $plugin_launcher_file) {
 
-    $plugin_root_dir = dirname($plugin_launcher_file);
+    $plugin_root_dir = dirname($plugin_launcher_file) . '/';
 
     if ( file_exists( $plugin_root_dir . 'vendor/autoload.php' ) ) {
         require $plugin_root_dir . 'vendor/autoload.php';
     }
 
 
-    $params = require_once $plugin_root_dir . '/configs/parameters.php';
-    $providers = require_once $plugin_root_dir . '/configs/providers.php';
+    $params = require_once $plugin_root_dir . 'configs/parameters.php';
+    $providers = require_once $plugin_root_dir . 'configs/providers.php';
 
     /**
      * Tell WP what to do when plugin is loaded.
@@ -41,8 +41,6 @@ function boot(string $plugin_launcher_file) {
         );
 
         $wp_rocket->load( $params, $providers );
-
-        // Call defines and functions.
     } );
 
     Deactivation::set_params($params);
