@@ -11,9 +11,6 @@
     }
   ],
   "autoload": {
-    "classmap": [
-      "inc/classes"
-    ],
     "psr-4": {
       "RocketLauncherCore\\": "inc/"
     }
