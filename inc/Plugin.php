@@ -30,9 +30,6 @@ class Plugin
      */
     public function __construct( Container $container ) {
         $this->container = $container;
-
-        add_filter( 'rocket_launcher_container', [ $this, 'get_container' ] );
-
     }
 
     /**
@@ -58,6 +55,8 @@ class Plugin
         foreach ($params as $key => $value) {
             $this->container->share( $key, $value );
         }
+
+        add_filter( "{$this->container->get('prefix')}_container", [ $this, 'get_container' ] );
 
         $this->container->share( 'event_manager', $this->event_manager );
         foreach ( $providers as $service_provider ) {
