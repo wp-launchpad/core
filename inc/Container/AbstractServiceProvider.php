@@ -14,6 +14,8 @@ abstract class AbstractServiceProvider extends LeagueServiceProvider implements 
      */
     protected $services_to_load = [];
 
+    protected $loaded = false;
+
     /**
      * Return IDs provided by the Service Provider.
      *
@@ -28,7 +30,8 @@ abstract class AbstractServiceProvider extends LeagueServiceProvider implements 
      */
     public function provides(string $alias): bool
     {
-        if(count($this->provides) === 0) {
+        if( ! $this->loaded ) {
+            $this->loaded = true;
             $this->define();
         }
 
