@@ -2,9 +2,17 @@
 
 namespace RocketLauncherCore\Container;
 
+use League\Container\Definition\DefinitionInterface;
 use League\Container\ServiceProvider\AbstractServiceProvider as LeagueServiceProvider;
 
 abstract class AbstractServiceProvider extends LeagueServiceProvider implements ServiceProviderInterface {
+
+    /**
+     * Services to load.
+     *
+     * @var array
+     */
+    protected $services_to_load = [];
 
     /**
      * Return IDs provided by the Service Provider.
@@ -12,21 +20,16 @@ abstract class AbstractServiceProvider extends LeagueServiceProvider implements 
      * @return string[]
      */
     public function declares(): array {
-        return [];
+        return $this->provides;
     }
 
     /**
-     * Override the logic from the provides method.
-     *
-     * @param string $alias Alias to check.
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function provides(string $alias): bool
     {
-
         if(count($this->provides) === 0) {
-            $this->provides = array_merge($this->declares(), $this->get_front_subscribers(), $this->get_common_subscribers(), $this->get_admin_subscribers(), $this->get_init_subscribers());
+            $this->define();
         }
 
         return parent::provides($alias);
@@ -66,5 +69,42 @@ abstract class AbstractServiceProvider extends LeagueServiceProvider implements 
      */
     public function get_init_subscribers(): array {
         return [];
+    }
+
+    /**
+    * @param string $class
+    * @param callable(DefinitionInterface $class_defintion): void|null $method
+    * @return void
+    */
+    public function register_service(string $class, callable $method = null) {
+
+        $this->services_to_load[] = [
+            'class' => $class,
+            'method' => $method
+        ];
+
+        if( ! in_array( $class, $this->provides, true ) ) {
+            $this->provides[] = $class;
+        }
+    }
+
+    /**
+     * Define classes.
+     *
+     * @return mixed
+     */
+   abstract protected function define();
+
+    public function register()
+    {
+        foreach ($this->services_to_load as $service) {
+            $class_registration = $this->getContainer()->add($service['class'], $service['class']);
+
+            if( ! $service['method'] ) {
+                continue;
+            }
+
+            $service['method']($class_registration);
+        }
     }
 }
