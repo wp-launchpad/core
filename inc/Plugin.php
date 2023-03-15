@@ -56,7 +56,7 @@ class Plugin
             $this->container->share( $key, $value );
         }
 
-        add_filter( "{$this->container->get('prefix')}_container", [ $this, 'get_container' ] );
+        add_filter( "{$this->container->get('prefix')}container", [ $this, 'get_container' ] );
 
         $this->container->share( 'event_manager', $this->event_manager );
         foreach ( $providers as $service_provider ) {
@@ -115,7 +115,7 @@ class Plugin
             $subscribers = array_merge($subscribers, $service_provider_instance->get_admin_subscribers());
         }
 
-        $subscribers = apply_filters( "{$this->container->get('prefix')}_load_subscribers", $subscribers, $service_provider_instance );
+        $subscribers = apply_filters( "{$this->container->get('prefix')}load_subscribers", $subscribers, $service_provider_instance );
 
         if ( empty( $subscribers ) ) {
             return;
