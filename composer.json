@@ -22,5 +22,14 @@
   },
   "require": {
     "league/container": "^3.3"
+  },
+  "require-dev": {
+    "wp-media/phpunit": "^3.0"
+  },
+  "scripts": {
+    "test-unit": "\"vendor/bin/phpunit\" --testsuite unit --colors=always --configuration tests/Unit/phpunit.xml.dist",
+    "run-tests": [
+      "@test-unit"
+    ]
   }
 }

@@ -2,6 +2,7 @@
 
 namespace RocketLauncherCore;
 
+use RocketLauncherCore\Container\IsOptimizableServiceProvider;
 use RocketLauncherCore\Container\ServiceProviderInterface;
 use League\Container\Container;
 use RocketLauncherCore\EventManagement\EventManager;
@@ -59,6 +60,13 @@ class Plugin
         add_filter( "{$this->container->get('prefix')}container", [ $this, 'get_container' ] );
 
         $this->container->share( 'event_manager', $this->event_manager );
+
+        $providers = array_map(function ($class) {
+            return new $class;
+        }, $providers);
+
+        $providers = $this->optimize_service_providers( $providers );
+
         foreach ( $providers as $service_provider ) {
             $this->container->addServiceProvider( $service_provider );
         }
@@ -74,6 +82,34 @@ class Plugin
         }
     }
 
+    /**
+     * Optimize service providers to keep only the ones we need to load.
+     *
+     * @param ServiceProviderInterface[] $providers Providers given to the plugin.
+     *
+     * @return ServiceProviderInterface[]
+     */
+    protected function optimize_service_providers(array $providers): array {
+        $optimized_providers = [];
+
+        foreach ($providers as $provider) {
+            if( ! $provider instanceof IsOptimizableServiceProvider ) {
+                $optimized_providers[] = $provider;
+                continue;
+            }
+            $subscribers = array_merge($provider->get_common_subscribers(), $provider->get_init_subscribers(), is_admin() ? $provider->get_admin_subscribers() : $provider->get_front_subscribers());
+
+            $subscribers = apply_filters("{$this->container->get('prefix')}load_provider_subscribers", $subscribers, $provider);
+
+            if( count( $subscribers ) === 0 ) {
+                continue;
+            }
+
+            $optimized_providers[] = $provider;
+        }
+
+        return $optimized_providers;
+    }
 
     /**
      * Load list of event subscribers from service provider.

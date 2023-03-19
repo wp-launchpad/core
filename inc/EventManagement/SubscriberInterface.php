@@ -20,5 +20,5 @@ interface SubscriberInterface {
      *
      * @return array
      */
-    public static function get_subscribed_events();
+    public function get_subscribed_events();
 }
