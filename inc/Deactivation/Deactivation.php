@@ -2,8 +2,7 @@
 
 namespace RocketLauncherCore\Deactivation;
 
-use League\Container\Container;
-use RocketLauncherCore\Activation\ActivationServiceProviderInterface;
+use Psr\Container\ContainerInterface;
 
 class Deactivation
 {
@@ -11,6 +10,8 @@ class Deactivation
     protected static $providers = [];
 
     protected static $params = [];
+
+    protected static $container;
 
     public static function set_providers(array $providers) {
         self::$providers = $providers;
@@ -20,28 +21,35 @@ class Deactivation
         self::$params = $params;
     }
 
+    public static function set_container(ContainerInterface $container) {
+        self::$container = $container;
+    }
+
     /**
      * Performs these actions during the plugin deactivation
      *
      * @return void
      */
     public static function deactivate_plugin() {
-        $container = new Container();
 
         foreach (self::$params as $key => $value) {
-            $container->add( $key, $value);
+            self::$container->add( $key, $value);
         }
 
         $providers = array_filter(self::$providers, function ($provider) {
-            $instance = new $provider();
-            if(! $instance instanceof DeactivationServiceProviderInterface) {
+            if(is_string($provider)) {
+                $provider = new $provider();
+            }
+
+            if(! $provider instanceof DeactivationServiceProviderInterface) {
                 return false;
             }
-            return $instance;
+
+            return $provider;
         });
 
         foreach ($providers as $provider) {
-            $container->addServiceProvider($provider);
+            self::$container->addServiceProvider($provider);
         }
 
         foreach ($providers as $provider) {
@@ -49,12 +57,12 @@ class Deactivation
                 continue;
             }
 
-            foreach ( $provider->get_deactivators() as $activator ) {
-                $activator_instance = $container->get( $activator );
-                if(! $activator_instance instanceof DeactivationInterface) {
+            foreach ( $provider->get_deactivators() as $deactivator ) {
+                $deactivator_instance = self::$container->get( $deactivator );
+                if(! $deactivator_instance instanceof DeactivationInterface) {
                     continue;
                 }
-                $activator_instance->deactivate();
+                $deactivator_instance->deactivate();
             }
         }
     }

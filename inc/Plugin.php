@@ -2,9 +2,9 @@
 
 namespace RocketLauncherCore;
 
+use Psr\Container\ContainerInterface;
 use RocketLauncherCore\Container\IsOptimizableServiceProvider;
 use RocketLauncherCore\Container\ServiceProviderInterface;
-use League\Container\Container;
 use RocketLauncherCore\EventManagement\EventManager;
 use RocketLauncherCore\EventManagement\SubscriberInterface;
 
@@ -13,7 +13,7 @@ class Plugin
     /**
      * Instance of Container class.
      *
-     * @var Container instance
+     * @var ContainerInterface instance
      */
     private $container;
 
@@ -27,16 +27,17 @@ class Plugin
     /**
      * Creates an instance of the Plugin.
      *
-     * @param Container $container     Instance of the container.
+     * @param ContainerInterface $container     Instance of the container.
      */
-    public function __construct( Container $container ) {
+    public function __construct( ContainerInterface $container, EventManager $event_manager ) {
         $this->container = $container;
+        $this->event_manager = $event_manager;
     }
 
     /**
      * Returns the Rocket container instance.
      *
-     * @return Container
+     * @return ContainerInterface
      */
     public function get_container() {
         return $this->container;
@@ -51,7 +52,6 @@ class Plugin
      *
      */
     public function load(array $params, array $providers = []) {
-        $this->event_manager = new EventManager();
 
         foreach ($params as $key => $value) {
             $this->container->share( $key, $value );
@@ -62,7 +62,11 @@ class Plugin
         $this->container->share( 'event_manager', $this->event_manager );
 
         $providers = array_map(function ($class) {
-            return new $class;
+            if(is_string($class)) {
+                return new $class;
+            }
+
+            return $class;
         }, $providers);
 
         $providers = $this->optimize_service_providers( $providers );
@@ -72,13 +76,11 @@ class Plugin
         }
 
         foreach ($providers as $service_provider ) {
-            $service_provider_instance = new $service_provider();
-            $this->load_init_subscribers( $service_provider_instance );
+            $this->load_init_subscribers( $service_provider );
         }
 
         foreach ($providers as $service_provider ) {
-            $service_provider_instance = new $service_provider();
-            $this->load_subscribers( $service_provider_instance );
+            $this->load_subscribers( $service_provider );
         }
     }
 
@@ -119,7 +121,6 @@ class Plugin
      * @return void
      */
     private function load_init_subscribers( ServiceProviderInterface $service_provider_instance ) {
-
         $subscribers = $service_provider_instance->get_init_subscribers();
 
         if ( empty( $subscribers ) ) {
@@ -145,7 +146,7 @@ class Plugin
 
         $subscribers = $service_provider_instance->get_common_subscribers();
 
-        if( is_admin() ) {
+        if( ! is_admin() ) {
             $subscribers = array_merge($subscribers, $service_provider_instance->get_front_subscribers());
         } else {
             $subscribers = array_merge($subscribers, $service_provider_instance->get_admin_subscribers());

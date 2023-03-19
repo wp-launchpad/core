@@ -2,7 +2,7 @@
 
 namespace RocketLauncherCore\Activation;
 
-use League\Container\Container;
+use Psr\Container\ContainerInterface;
 
 class Activation
 {
@@ -10,6 +10,8 @@ class Activation
     protected static $providers = [];
 
     protected static $params = [];
+
+    protected static $container;
 
     public static function set_providers(array $providers) {
         self::$providers = $providers;
@@ -19,28 +21,35 @@ class Activation
         self::$params = $params;
     }
 
+    public static function set_container(ContainerInterface $container) {
+        self::$container = $container;
+    }
+
     /**
      * Performs these actions during the plugin activation
      *
      * @return void
      */
     public static function activate_plugin() {
-        $container = new Container();
 
         foreach (self::$params as $key => $value) {
-            $container->add( $key, $value);
+            self::$container->add( $key, $value);
         }
 
         $providers = array_filter(self::$providers, function ($provider) {
-           $instance = new $provider();
-           if(! $instance instanceof ActivationServiceProviderInterface) {
+            if(is_string($provider)) {
+                $provider = new $provider();
+            }
+
+           if(! $provider instanceof ActivationServiceProviderInterface) {
                return false;
            }
-           return $instance;
+
+           return $provider;
         });
 
         foreach ($providers as $provider) {
-            $container->addServiceProvider($provider);
+            self::$container->addServiceProvider($provider);
         }
 
         foreach ($providers as $provider) {
@@ -49,7 +58,7 @@ class Activation
             }
 
             foreach ( $provider->get_activators() as $activator ) {
-                $activator_instance = $container->get( $activator );
+                $activator_instance = self::$container->get( $activator );
                 if(! $activator_instance instanceof ActivationInterface) {
                     continue;
                 }

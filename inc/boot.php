@@ -5,6 +5,7 @@ namespace RocketLauncherCore;
 use League\Container\Container;
 use RocketLauncherCore\Activation\Activation;
 use RocketLauncherCore\Deactivation\Deactivation;
+use RocketLauncherCore\EventManagement\EventManager;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -57,18 +58,20 @@ function boot(string $plugin_launcher_file) {
         }
 
         $wp_rocket = new Plugin(
-            new Container()
+            new Container(),
+            new EventManager()
         );
 
         $wp_rocket->load( $params, $providers );
     } );
 
-
+    Deactivation::set_container(new Container());
     Deactivation::set_params($params);
     Deactivation::set_providers($providers);
 
     register_deactivation_hook( $plugin_launcher_file, [ Deactivation::class, 'deactivate_plugin' ] );
 
+    Activation::set_container(new Container());
     Activation::set_params($params);
     Activation::set_providers($providers);
 

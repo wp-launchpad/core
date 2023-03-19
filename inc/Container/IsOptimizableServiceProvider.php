@@ -2,7 +2,7 @@
 
 namespace RocketLauncherCore\Container;
 
-interface IsOptimizableServiceProvider
+interface IsOptimizableServiceProvider extends ServiceProviderInterface
 {
 
 }

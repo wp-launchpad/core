@@ -2,7 +2,7 @@
 
 namespace RocketLauncherCore\Activation;
 
-interface HasActivatorServiceProviderInterface
+interface HasActivatorServiceProviderInterface extends ActivationServiceProviderInterface
 {
     /**
      * @return string[]

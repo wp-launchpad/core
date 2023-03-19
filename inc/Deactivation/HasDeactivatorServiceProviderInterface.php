@@ -2,7 +2,7 @@
 
 namespace RocketLauncherCore\Deactivation;
 
-interface HasDeactivatorServiceProviderInterface
+interface HasDeactivatorServiceProviderInterface extends DeactivationServiceProviderInterface
 {
     /**
      * @return string[]
