@@ -1,11 +1,11 @@
 <?php
 
-namespace RocketLauncherCore;
+namespace LaunchpadCore;
 
 use League\Container\Container;
-use RocketLauncherCore\Activation\Activation;
-use RocketLauncherCore\Deactivation\Deactivation;
-use RocketLauncherCore\EventManagement\EventManager;
+use LaunchpadCore\Activation\Activation;
+use LaunchpadCore\Deactivation\Deactivation;
+use LaunchpadCore\EventManagement\EventManager;
 
 defined( 'ABSPATH' ) || exit;
 

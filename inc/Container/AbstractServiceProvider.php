@@ -1,6 +1,6 @@
 <?php
 
-namespace RocketLauncherCore\Container;
+namespace LaunchpadCore\Container;
 
 use League\Container\Definition\DefinitionInterface;
 use League\Container\ServiceProvider\AbstractServiceProvider as LeagueServiceProvider;

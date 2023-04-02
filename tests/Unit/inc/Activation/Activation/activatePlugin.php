@@ -1,11 +1,11 @@
 <?php
 
-namespace RocketLauncherCore\Tests\Unit\inc\Activation\Activation;
+namespace LaunchpadCore\Tests\Unit\inc\Activation\Activation;
 
 use League\Container\Container;
 use Mockery;
-use RocketLauncherCore\Activation\Activation;
-use RocketLauncherCore\Tests\Unit\TestCase;
+use LaunchpadCore\Activation\Activation;
+use LaunchpadCore\Tests\Unit\TestCase;
 
 class Test_ActivatePlugin extends TestCase
 {

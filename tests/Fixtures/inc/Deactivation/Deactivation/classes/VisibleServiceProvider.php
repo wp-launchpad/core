@@ -1,9 +1,9 @@
 <?php
 
-namespace RocketLauncherCore\Tests\Fixtures\inc\Deactivation\Deactivation\classes;
+namespace LaunchpadCore\Tests\Fixtures\inc\Deactivation\Deactivation\classes;
 
-use RocketLauncherCore\Container\AbstractServiceProvider;
-use RocketLauncherCore\Deactivation\DeactivationServiceProviderInterface;
+use LaunchpadCore\Container\AbstractServiceProvider;
+use LaunchpadCore\Deactivation\DeactivationServiceProviderInterface;
 
 class VisibleServiceProvider extends AbstractServiceProvider implements DeactivationServiceProviderInterface
 {

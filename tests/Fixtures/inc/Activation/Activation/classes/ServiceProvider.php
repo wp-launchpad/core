@@ -1,8 +1,8 @@
 <?php
 
-namespace RocketLauncherCore\Tests\Fixtures\inc\Activation\Activation\classes;
+namespace LaunchpadCore\Tests\Fixtures\inc\Activation\Activation\classes;
 
-use RocketLauncherCore\Container\AbstractServiceProvider;
+use LaunchpadCore\Container\AbstractServiceProvider;
 
 class ServiceProvider extends AbstractServiceProvider
 {

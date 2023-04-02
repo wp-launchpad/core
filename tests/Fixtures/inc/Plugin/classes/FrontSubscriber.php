@@ -1,8 +1,8 @@
 <?php
 
-namespace RocketLauncherCore\Tests\Fixtures\inc\Plugin\classes;
+namespace LaunchpadCore\Tests\Fixtures\inc\Plugin\classes;
 
-use RocketLauncherCore\EventManagement\SubscriberInterface;
+use LaunchpadCore\EventManagement\SubscriberInterface;
 
 class FrontSubscriber implements SubscriberInterface
 {

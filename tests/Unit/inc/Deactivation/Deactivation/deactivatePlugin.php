@@ -1,11 +1,11 @@
 <?php
 
-namespace RocketLauncherCore\Tests\Unit\inc\Deactivation\Deactivation;
+namespace LaunchpadCore\Tests\Unit\inc\Deactivation\Deactivation;
 
 use League\Container\Container;
 use Mockery;
-use RocketLauncherCore\Deactivation\Deactivation;
-use RocketLauncherCore\Tests\Unit\TestCase;
+use LaunchpadCore\Deactivation\Deactivation;
+use LaunchpadCore\Tests\Unit\TestCase;
 
 class Test_DeactivatePlugin extends TestCase
 {

@@ -1,9 +1,9 @@
 <?php
 
-use RocketLauncherCore\Deactivation\DeactivationInterface;
-use RocketLauncherCore\Tests\Fixtures\inc\Deactivation\Deactivation\classes\DeactivatorServiceProvider;
-use RocketLauncherCore\Tests\Fixtures\inc\Deactivation\Deactivation\classes\ServiceProvider;
-use RocketLauncherCore\Tests\Fixtures\inc\Deactivation\Deactivation\classes\VisibleServiceProvider;
+use LaunchpadCore\Deactivation\DeactivationInterface;
+use LaunchpadCore\Tests\Fixtures\inc\Deactivation\Deactivation\classes\DeactivatorServiceProvider;
+use LaunchpadCore\Tests\Fixtures\inc\Deactivation\Deactivation\classes\ServiceProvider;
+use LaunchpadCore\Tests\Fixtures\inc\Deactivation\Deactivation\classes\VisibleServiceProvider;
 
 $deactivator = Mockery::mock(DeactivationInterface::class);
 

@@ -1,11 +1,11 @@
 <?php
-namespace RocketLauncherCore\Tests\Unit\inc\Plugin;
+namespace LaunchpadCore\Tests\Unit\inc\Plugin;
 
 use League\Container\Container;
 use Mockery;
-use RocketLauncherCore\EventManagement\EventManager;
-use RocketLauncherCore\Plugin;
-use RocketLauncherCore\Tests\Unit\TestCase;
+use LaunchpadCore\EventManagement\EventManager;
+use LaunchpadCore\Plugin;
+use LaunchpadCore\Tests\Unit\TestCase;
 use Brain\Monkey\Functions;
 class Test_Load extends TestCase {
     protected $container;

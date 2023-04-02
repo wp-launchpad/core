@@ -1,8 +1,8 @@
 <?php
 
-namespace RocketLauncherCore\Tests\Fixtures\inc\Deactivation\Deactivation\classes;
+namespace LaunchpadCore\Tests\Fixtures\inc\Deactivation\Deactivation\classes;
 
-use RocketLauncherCore\Container\AbstractServiceProvider;
+use LaunchpadCore\Container\AbstractServiceProvider;
 
 class ServiceProvider extends AbstractServiceProvider
 {
