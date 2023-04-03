@@ -79,10 +79,11 @@ abstract class AbstractServiceProvider extends LeagueServiceProvider implements 
     * @param callable(DefinitionInterface $class_defintion): void|null $method
     * @return void
     */
-    public function register_service(string $class, callable $method = null) {
+    public function register_service(string $class, callable $method = null, string $concrete = '') {
 
         $this->services_to_load[] = [
             'class' => $class,
+            'concrete' => $concrete,
             'method' => $method
         ];
 
@@ -101,7 +102,8 @@ abstract class AbstractServiceProvider extends LeagueServiceProvider implements 
     public function register()
     {
         foreach ($this->services_to_load as $service) {
-            $class_registration = $this->getContainer()->add($service['class'], $service['class']);
+            $class = '' === $service['concrete'] ? $service['class'] : $service['concrete'];
+            $class_registration = $this->getContainer()->add($service['class'], $class);
 
             if( ! $service['method'] ) {
                 continue;
