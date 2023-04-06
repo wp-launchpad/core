@@ -1,5 +1,5 @@
 <?php
-namespace RocketLauncherCore\EventManagement;
+namespace LaunchpadCore\EventManagement;
 
 interface SubscriberInterface {
     /**

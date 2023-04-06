@@ -1,6 +1,6 @@
 <?php
 
-namespace RocketLauncherCore\Activation;
+namespace LaunchpadCore\Activation;
 
 use Psr\Container\ContainerInterface;
 

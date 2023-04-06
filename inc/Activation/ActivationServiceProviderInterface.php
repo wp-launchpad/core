@@ -1,6 +1,6 @@
 <?php
 
-namespace RocketLauncherCore\Activation;
+namespace LaunchpadCore\Activation;
 
 interface ActivationServiceProviderInterface
 {

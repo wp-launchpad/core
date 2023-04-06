@@ -1,6 +1,6 @@
 {
-  "name": "crochetfeve0251/rocket-launcher-core",
-  "description": "Core from Rocket launcher",
+  "name": "wp-launchpad/core",
+  "description": "Core from Launchpad",
   "keywords": [
     "wordpress"
   ],
@@ -12,12 +12,12 @@
   ],
   "autoload": {
     "psr-4": {
-      "RocketLauncherCore\\": "inc/"
+      "LaunchpadCore\\": "inc/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "RocketLauncherCore\\Tests\\": "tests/"
+      "LaunchpadCore\\Tests\\": "tests/"
     }
   },
   "require": {

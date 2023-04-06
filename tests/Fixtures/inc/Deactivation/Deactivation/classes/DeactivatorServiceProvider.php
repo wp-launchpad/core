@@ -1,9 +1,9 @@
 <?php
 
-namespace RocketLauncherCore\Tests\Fixtures\inc\Deactivation\Deactivation\classes;
+namespace LaunchpadCore\Tests\Fixtures\inc\Deactivation\Deactivation\classes;
 
-use RocketLauncherCore\Container\AbstractServiceProvider;
-use RocketLauncherCore\Deactivation\HasDeactivatorServiceProviderInterface;
+use LaunchpadCore\Container\AbstractServiceProvider;
+use LaunchpadCore\Deactivation\HasDeactivatorServiceProviderInterface;
 
 class DeactivatorServiceProvider extends AbstractServiceProvider implements HasDeactivatorServiceProviderInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace RocketLauncherCore\Container;
+namespace LaunchpadCore\Container;
 
 interface IsOptimizableServiceProvider extends ServiceProviderInterface
 {

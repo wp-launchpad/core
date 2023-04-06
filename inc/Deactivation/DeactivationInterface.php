@@ -1,6 +1,6 @@
 <?php
 
-namespace RocketLauncherCore\Deactivation;
+namespace LaunchpadCore\Deactivation;
 
 interface DeactivationInterface
 {

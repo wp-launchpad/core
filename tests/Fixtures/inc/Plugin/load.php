@@ -5,13 +5,13 @@ require_once __DIR__ . '/classes/FrontSubscriber.php';
 require_once __DIR__ . '/classes/InitSubscriber.php';
 require_once __DIR__ . '/classes/OptimizedSubscriber.php';
 
-use RocketLauncherCore\Container\IsOptimizableServiceProvider;
-use RocketLauncherCore\Container\ServiceProviderInterface;
-use RocketLauncherCore\Tests\Fixtures\inc\Plugin\classes\AdminSubscriber;
-use RocketLauncherCore\Tests\Fixtures\inc\Plugin\classes\CommonSubscriber;
-use RocketLauncherCore\Tests\Fixtures\inc\Plugin\classes\FrontSubscriber;
-use RocketLauncherCore\Tests\Fixtures\inc\Plugin\classes\InitSubscriber;
-use RocketLauncherCore\Tests\Fixtures\inc\Plugin\classes\OptimizedSubscriber;
+use LaunchpadCore\Container\IsOptimizableServiceProvider;
+use LaunchpadCore\Container\ServiceProviderInterface;
+use LaunchpadCore\Tests\Fixtures\inc\Plugin\classes\AdminSubscriber;
+use LaunchpadCore\Tests\Fixtures\inc\Plugin\classes\CommonSubscriber;
+use LaunchpadCore\Tests\Fixtures\inc\Plugin\classes\FrontSubscriber;
+use LaunchpadCore\Tests\Fixtures\inc\Plugin\classes\InitSubscriber;
+use LaunchpadCore\Tests\Fixtures\inc\Plugin\classes\OptimizedSubscriber;
 
 $admin_subscriber = Mockery::mock(AdminSubscriber::class);
 $front_subscriber = Mockery::mock(FrontSubscriber::class);

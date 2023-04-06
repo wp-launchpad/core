@@ -1,12 +1,12 @@
 <?php
 
-namespace RocketLauncherCore;
+namespace LaunchpadCore;
 
 use Psr\Container\ContainerInterface;
-use RocketLauncherCore\Container\IsOptimizableServiceProvider;
-use RocketLauncherCore\Container\ServiceProviderInterface;
-use RocketLauncherCore\EventManagement\EventManager;
-use RocketLauncherCore\EventManagement\SubscriberInterface;
+use LaunchpadCore\Container\IsOptimizableServiceProvider;
+use LaunchpadCore\Container\ServiceProviderInterface;
+use LaunchpadCore\EventManagement\EventManager;
+use LaunchpadCore\EventManagement\SubscriberInterface;
 
 class Plugin
 {

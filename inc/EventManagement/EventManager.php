@@ -1,6 +1,6 @@
 <?php
 
-namespace RocketLauncherCore\EventManagement;
+namespace LaunchpadCore\EventManagement;
 
 /**
  * The event manager manages events using the WordPress plugin API.

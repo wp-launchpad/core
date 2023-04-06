@@ -1,9 +1,9 @@
 <?php
 
-use RocketLauncherCore\Activation\ActivationInterface;
-use RocketLauncherCore\Tests\Fixtures\inc\Activation\Activation\classes\ActivatorServiceProvider;
-use RocketLauncherCore\Tests\Fixtures\inc\Activation\Activation\classes\ServiceProvider;
-use RocketLauncherCore\Tests\Fixtures\inc\Activation\Activation\classes\VisibleServiceProvider;
+use LaunchpadCore\Activation\ActivationInterface;
+use LaunchpadCore\Tests\Fixtures\inc\Activation\Activation\classes\ActivatorServiceProvider;
+use LaunchpadCore\Tests\Fixtures\inc\Activation\Activation\classes\ServiceProvider;
+use LaunchpadCore\Tests\Fixtures\inc\Activation\Activation\classes\VisibleServiceProvider;
 
 
 $activator = Mockery::mock(ActivationInterface::class);
