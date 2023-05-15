@@ -44,7 +44,7 @@ class Deactivation
                 $provider = new $provider();
             }
 
-            if(! $provider instanceof DeactivationServiceProviderInterface) {
+            if(! $provider instanceof DeactivationServiceProviderInterface && count($provider->get_inflectors()) === 0) {
                 return false;
             }
 

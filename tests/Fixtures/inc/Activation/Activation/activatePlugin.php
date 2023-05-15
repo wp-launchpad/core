@@ -26,6 +26,7 @@ return [
                     'provider' => $provider,
                     'callbacks' => [
                         'get_activators' => [],
+                        'get_inflectors' => [],
                     ]
                 ],
                 [
