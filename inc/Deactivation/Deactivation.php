@@ -2,6 +2,7 @@
 
 namespace LaunchpadCore\Deactivation;
 
+use LaunchpadCore\Container\AbstractServiceProvider;
 use Psr\Container\ContainerInterface;
 
 class Deactivation
@@ -32,8 +33,10 @@ class Deactivation
      */
     public static function deactivate_plugin() {
 
+        $container = self::$container;
+
         foreach (self::$params as $key => $value) {
-            self::$container->add( $key, $value);
+            $container->add( $key, $value);
         }
 
         $providers = array_filter(self::$providers, function ($provider) {
@@ -49,8 +52,16 @@ class Deactivation
         });
 
         foreach ($providers as $provider) {
-            self::$container->addServiceProvider($provider);
+            $container->addServiceProvider($provider);
         }
+
+        /**
+         * Deactivation providers.
+         *
+         * @param AbstractServiceProvider[] $providers Providers.
+         * @return AbstractServiceProvider[]
+         */
+        $providers = apply_filters("{$container->get('prefix')}deactivate_providers", $providers);
 
         foreach ($providers as $provider) {
             if(! $provider instanceof HasDeactivatorServiceProviderInterface) {

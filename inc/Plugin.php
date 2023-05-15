@@ -2,6 +2,7 @@
 
 namespace LaunchpadCore;
 
+use LaunchpadCore\Container\AbstractServiceProvider;
 use Psr\Container\ContainerInterface;
 use LaunchpadCore\Container\IsOptimizableServiceProvider;
 use LaunchpadCore\Container\ServiceProviderInterface;
@@ -53,6 +54,11 @@ class Plugin
      */
     public function load(array $params, array $providers = []) {
 
+        /**
+         * Runs before the plugin is loaded.
+         */
+        do_action("{$this->container->get('prefix')}before_load");
+
         foreach ($params as $key => $value) {
             $this->container->share( $key, $value );
         }
@@ -82,6 +88,11 @@ class Plugin
         foreach ($providers as $service_provider ) {
             $this->load_subscribers( $service_provider );
         }
+
+        /**
+         * Runs after the plugin is loaded.
+         */
+        do_action("{$this->container->get('prefix')}after_load");
     }
 
     /**
@@ -101,6 +112,14 @@ class Plugin
             }
             $subscribers = array_merge($provider->get_common_subscribers(), $provider->get_init_subscribers(), is_admin() ? $provider->get_admin_subscribers() : $provider->get_front_subscribers());
 
+            /**
+             * Plugin Subscribers from a provider.
+             *
+             * @param SubscriberInterface[] $subscribers Subscribers.
+             * @param AbstractServiceProvider $provider Provider.
+             *
+             * @return SubscriberInterface[]
+             */
             $subscribers = apply_filters("{$this->container->get('prefix')}load_provider_subscribers", $subscribers, $provider);
 
             if( count( $subscribers ) === 0 ) {
@@ -122,6 +141,15 @@ class Plugin
      */
     private function load_init_subscribers( ServiceProviderInterface $service_provider_instance ) {
         $subscribers = $service_provider_instance->get_init_subscribers();
+
+        /**
+         * Plugin Init Subscribers.
+         *
+         * @param SubscriberInterface[] $subscribers Subscribers.
+         *
+         * @return SubscriberInterface[]
+         */
+        $subscribers = apply_filters("{$this->container->get('prefix')}load_init_subscribers", $subscribers);
 
         if ( empty( $subscribers ) ) {
             return;
@@ -152,6 +180,14 @@ class Plugin
             $subscribers = array_merge($subscribers, $service_provider_instance->get_admin_subscribers());
         }
 
+        /**
+         * Plugin Subscribers.
+         *
+         * @param SubscriberInterface[] $subscribers Subscribers.
+         * @param AbstractServiceProvider $service_provider_instance Provider.
+         *
+         * @return SubscriberInterface[]
+         */
         $subscribers = apply_filters( "{$this->container->get('prefix')}load_subscribers", $subscribers, $service_provider_instance );
 
         if ( empty( $subscribers ) ) {
