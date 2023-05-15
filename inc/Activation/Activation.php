@@ -2,6 +2,7 @@
 
 namespace LaunchpadCore\Activation;
 
+use LaunchpadCore\Container\AbstractServiceProvider;
 use Psr\Container\ContainerInterface;
 
 class Activation
@@ -32,6 +33,8 @@ class Activation
      */
     public static function activate_plugin() {
 
+        $container = self::$container;
+
         foreach (self::$params as $key => $value) {
             self::$container->add( $key, $value);
         }
@@ -47,6 +50,14 @@ class Activation
 
            return $provider;
         });
+
+        /**
+         * Activation providers.
+         *
+         * @param AbstractServiceProvider[] $providers Providers.
+         * @return AbstractServiceProvider[]
+         */
+        $providers = apply_filters("{$container->get('prefix')}deactivate_providers", $providers);
 
         foreach ($providers as $provider) {
             self::$container->addServiceProvider($provider);

@@ -31,6 +31,8 @@ class Test_ActivatePlugin extends TestCase
 
         Activation::set_providers($providers);
 
+        $this->container->allows()->get('prefix')->andReturn('prefix');
+
         foreach ($config['activators'] as $activator) {
             $this->container->allows()->get(get_class($activator))->andReturn($activator);
         }

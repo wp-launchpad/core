@@ -31,6 +31,8 @@ class Test_DeactivatePlugin extends TestCase
 
         Deactivation::set_providers($providers);
 
+        $this->container->allows()->get('prefix')->andReturn('prefix');
+
         foreach ($config['deactivators'] as $deactivator) {
             $this->container->allows()->get(get_class($deactivator))->andReturn($deactivator);
         }

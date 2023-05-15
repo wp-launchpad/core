@@ -99,6 +99,10 @@ abstract class AbstractServiceProvider extends LeagueServiceProvider implements 
      */
    abstract protected function define();
 
+    /**
+     * Register classes provided by the service provider.
+     * @return void
+     */
     public function register()
     {
         foreach ($this->services_to_load as $service) {
