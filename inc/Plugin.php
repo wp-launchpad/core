@@ -54,14 +54,14 @@ class Plugin
      */
     public function load(array $params, array $providers = []) {
 
+        foreach ($params as $key => $value) {
+            $this->container->share( $key, $value );
+        }
+
         /**
          * Runs before the plugin is loaded.
          */
         do_action("{$this->container->get('prefix')}before_load");
-
-        foreach ($params as $key => $value) {
-            $this->container->share( $key, $value );
-        }
 
         add_filter( "{$this->container->get('prefix')}container", [ $this, 'get_container' ] );
 
