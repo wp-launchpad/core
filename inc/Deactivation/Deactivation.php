@@ -56,6 +56,13 @@ class Deactivation
             $container->addServiceProvider($provider);
         }
 
+        $providers = array_map(function ($provider) {
+            if(is_string($provider)) {
+                return new $provider();
+            }
+            return $provider;
+        }, $providers);
+
         foreach ( $providers as $service_provider ) {
             if( ! $service_provider instanceof HasInflectorInterface ) {
                 continue;
