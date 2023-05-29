@@ -3,6 +3,7 @@
 namespace LaunchpadCore;
 
 use LaunchpadCore\Container\AbstractServiceProvider;
+use LaunchpadCore\Container\HasInflectorInterface;
 use Psr\Container\ContainerInterface;
 use LaunchpadCore\Container\IsOptimizableServiceProvider;
 use LaunchpadCore\Container\ServiceProviderInterface;
@@ -79,6 +80,13 @@ class Plugin
 
         foreach ( $providers as $service_provider ) {
             $this->container->addServiceProvider( $service_provider );
+        }
+
+        foreach ( $providers as $service_provider ) {
+            if( ! $service_provider instanceof HasInflectorInterface ) {
+                continue;
+            }
+            $service_provider->register_inflectors();
         }
 
         foreach ($providers as $service_provider ) {

@@ -77,15 +77,6 @@ abstract class AbstractServiceProvider extends LeagueServiceProvider implements 
     }
 
     /**
-     * Returns inflectors mapping.
-     *
-     * @return array<string,array>
-     */
-    public function get_inflectors(): array {
-        return [];
-    }
-
-    /**
     * @param string $class
     * @param callable(DefinitionInterface $class_defintion): void|null $method
     * @return void
@@ -128,38 +119,4 @@ abstract class AbstractServiceProvider extends LeagueServiceProvider implements 
         }
     }
 
-    /**
-     * Set a container.
-     *
-     * @param Container $container
-     *
-     * @return self
-     */
-    public function setLeagueContainer(Container $container): ContainerAwareInterface
-    {
-        $result = parent::setLeagueContainer($container);
-        $this->register_inflectors();
-        return $result;
-    }
-
-    /**
-     * Register inflectors.
-     *
-     * @return void
-     */
-    protected function register_inflectors(): void {
-        foreach ($this->get_inflectors() as $class => $data) {
-            if(! is_array($data) || ! key_exists('method', $data)) {
-                continue;
-            }
-            $method = $data['method'];
-
-            if( ! key_exists('args', $data) || ! is_array($data['args']) ) {
-                $this->getLeagueContainer()->inflector($class)->invokeMethod($method, []);
-                continue;
-            }
-
-            $this->getLeagueContainer()->inflector($class)->invokeMethod($method, $data['args']);
-        }
-    }
 }

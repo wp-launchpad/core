@@ -3,6 +3,7 @@
 namespace LaunchpadCore\Activation;
 
 use LaunchpadCore\Container\AbstractServiceProvider;
+use LaunchpadCore\Container\HasInflectorInterface;
 use Psr\Container\ContainerInterface;
 
 class Activation
@@ -61,6 +62,13 @@ class Activation
 
         foreach ($providers as $provider) {
             self::$container->addServiceProvider($provider);
+        }
+
+        foreach ( $providers as $service_provider ) {
+            if( ! $service_provider instanceof HasInflectorInterface ) {
+                continue;
+            }
+            $service_provider->register_inflectors();
         }
 
         foreach ($providers as $provider) {
