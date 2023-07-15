@@ -23,6 +23,10 @@ function boot(string $plugin_launcher_file) {
         require $plugin_root_dir . 'vendor/autoload.php';
     }
 
+    if ( file_exists( $plugin_root_dir . 'vendor-prefixed/autoload.php' ) ) {
+        require $plugin_root_dir . 'vendor-prefixed/autoload.php';
+    }
+
 
     $params = require_once $plugin_root_dir . 'configs/parameters.php';
     $providers = require_once $plugin_root_dir . 'configs/providers.php';
