@@ -45,7 +45,7 @@ class Activation
                 $provider = new $provider();
             }
 
-           if(! $provider instanceof ActivationServiceProviderInterface && count($provider->get_inflectors()) === 0) {
+           if(! $provider instanceof ActivationServiceProviderInterface && (! $provider instanceof HasInflectorInterface || count($provider->get_inflectors()) === 0)) {
                return false;
            }
 
