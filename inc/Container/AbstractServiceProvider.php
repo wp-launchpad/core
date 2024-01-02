@@ -107,7 +107,7 @@ abstract class AbstractServiceProvider extends LeagueServiceProvider implements 
      */
     public function register()
     {
-        foreach ($this->services_to_load as $service) {
+        foreach ($this->services_to_load as $service) {//todo: wrap registered classes
             $class = '' === $service['concrete'] ? $service['class'] : $service['concrete'];
             $class_registration = $this->getContainer()->add($service['class'], $class);
 
