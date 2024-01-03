@@ -2,6 +2,7 @@
 
 namespace LaunchpadCore;
 
+use LaunchpadCore\EventManagement\Wrapper\SubscriberWrapper;
 use League\Container\Container;
 use LaunchpadCore\Activation\Activation;
 use LaunchpadCore\Deactivation\Deactivation;
@@ -63,7 +64,8 @@ function boot(string $plugin_launcher_file) {
 
         $wp_rocket = new Plugin(
             new Container(),
-            new EventManager()
+            new EventManager(),
+            new SubscriberWrapper()
         );
 
         $wp_rocket->load( $params, $providers );
