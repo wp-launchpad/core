@@ -6,13 +6,16 @@ use LaunchpadCore\EventManagement\SubscriberInterface;
 
 class WrappedSubscriber implements SubscriberInterface
 {
-
     protected $object;
 
+    /**
+     * @var array
+     */
     protected $events;
 
     /**
      * @param $object
+     * @param array $events
      */
     public function __construct($object, array $events = [])
     {
@@ -23,7 +26,7 @@ class WrappedSubscriber implements SubscriberInterface
     /**
      * @inheritDoc
      */
-    public function get_subscribed_events()
+    public function get_subscribed_events(): array
     {
         return $this->events;
     }
