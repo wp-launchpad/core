@@ -31,9 +31,9 @@ class WrappedSubscriber implements SubscriberInterface
     public function __call($name, $arguments)
     {
         if( ! method_exists( $this, $name ) ) {
-            return $this->object->{$name}($arguments);
+            return $this->object->{$name}(...$arguments);
         }
 
-        return $this->{$name}($arguments);
+        return $this->{$name}(...$arguments);
     }
 }
