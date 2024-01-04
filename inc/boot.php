@@ -65,7 +65,7 @@ function boot(string $plugin_launcher_file) {
         $wp_rocket = new Plugin(
             new Container(),
             new EventManager(),
-            new SubscriberWrapper()
+            new SubscriberWrapper(key_exists('prefix', $params) ? $params['prefix'] : '')
         );
 
         $wp_rocket->load( $params, $providers );
