@@ -2,6 +2,7 @@
 
 namespace LaunchpadCore;
 
+use LaunchpadCore\EventManagement\Wrapper\SubscriberWrapper;
 use LaunchpadCore\Container\PrefixAwareInterface;
 use League\Container\Container;
 use LaunchpadCore\Activation\Activation;
@@ -68,8 +69,9 @@ function boot(string $plugin_launcher_file) {
         $container->inflector(PrefixAwareInterface::class)->invokeMethod('set_prefix', $prefix);
 
         $wp_rocket = new Plugin(
-            $container,
-            new EventManager()
+            new Container(),
+            new EventManager(),
+            new SubscriberWrapper($prefix)
         );
 
         $wp_rocket->load( $params, $providers );

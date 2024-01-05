@@ -4,6 +4,7 @@ namespace LaunchpadCore;
 
 use LaunchpadCore\Container\AbstractServiceProvider;
 use LaunchpadCore\Container\HasInflectorInterface;
+use LaunchpadCore\EventManagement\Wrapper\SubscriberWrapper;
 use Psr\Container\ContainerInterface;
 use LaunchpadCore\Container\IsOptimizableServiceProvider;
 use LaunchpadCore\Container\ServiceProviderInterface;
@@ -27,13 +28,19 @@ class Plugin
     private $event_manager;
 
     /**
+     * @var SubscriberWrapper
+     */
+    private $subscriber_wrapper;
+
+    /**
      * Creates an instance of the Plugin.
      *
      * @param ContainerInterface $container     Instance of the container.
      */
-    public function __construct( ContainerInterface $container, EventManager $event_manager ) {
+    public function __construct( ContainerInterface $container, EventManager $event_manager, SubscriberWrapper $subscriber_wrapper ) {
         $this->container = $container;
         $this->event_manager = $event_manager;
+        $this->subscriber_wrapper = $subscriber_wrapper;
     }
 
     /**
@@ -204,9 +211,11 @@ class Plugin
 
         foreach ( $subscribers as $subscriber ) {
             $subscriber_object = $this->container->get( $subscriber );
-            if ( $subscriber_object instanceof SubscriberInterface ) {
-                $this->container->get( 'event_manager' )->add_subscriber( $subscriber_object );
+            if ( ! $subscriber_object instanceof SubscriberInterface ) {
+                $subscriber_object = $this->subscriber_wrapper->wrap($subscriber_object);
             }
+
+            $this->container->get( 'event_manager' )->add_subscriber( $subscriber_object );
         }
     }
 }
