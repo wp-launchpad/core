@@ -3,6 +3,7 @@
 namespace LaunchpadCore;
 
 use LaunchpadCore\EventManagement\Wrapper\SubscriberWrapper;
+use LaunchpadCore\Container\PrefixAwareInterface;
 use League\Container\Container;
 use LaunchpadCore\Activation\Activation;
 use LaunchpadCore\Deactivation\Deactivation;
@@ -62,22 +63,33 @@ function boot(string $plugin_launcher_file) {
             return;
         }
 
+
+        $prefix = key_exists('prefix', $params) ? $params['prefix'] : '';
+        $container = new Container();
+        $container->inflector(PrefixAwareInterface::class)->invokeMethod('set_prefix', $prefix);
+
         $wp_rocket = new Plugin(
             new Container(),
             new EventManager(),
-            new SubscriberWrapper(key_exists('prefix', $params) ? $params['prefix'] : '')
+            new SubscriberWrapper($prefix)
         );
 
         $wp_rocket->load( $params, $providers );
     } );
 
-    Deactivation::set_container(new Container());
+    $container = new Container();
+    $prefix = key_exists('prefix', $params) ? $params['prefix'] : '';
+    $container->inflector(PrefixAwareInterface::class)->invokeMethod('set_prefix', $prefix);
+    Deactivation::set_container($container);
     Deactivation::set_params($params);
     Deactivation::set_providers($providers);
 
     register_deactivation_hook( $plugin_launcher_file, [ Deactivation::class, 'deactivate_plugin' ] );
 
-    Activation::set_container(new Container());
+    $container = new Container();
+    $prefix = key_exists('prefix', $params) ? $params['prefix'] : '';
+    $container->inflector(PrefixAwareInterface::class)->invokeMethod('set_prefix', $prefix);
+    Activation::set_container($container);
     Activation::set_params($params);
     Activation::set_providers($providers);
 
