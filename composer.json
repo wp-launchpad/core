@@ -24,7 +24,9 @@
     "league/container": "^3.3"
   },
   "require-dev": {
-    "wp-media/phpunit": "^3.0"
+    "wp-media/phpunit": "^3.0",
+    "wp-launchpad/cli": "^1.0.2",
+    "wp-launchpad/phpunit-wp-hooks": "^1.0"
   },
   "scripts": {
     "test-unit": "\"vendor/bin/phpunit\" --testsuite unit --colors=always --configuration tests/Unit/phpunit.xml.dist",
