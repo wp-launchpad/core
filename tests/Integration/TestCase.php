@@ -11,7 +11,6 @@ abstract class TestCase extends BaseTestCase
 
     protected $config;
 
-    protected $prefix;
     protected static $transients = [];
 
     public static function set_up_before_class()
@@ -45,8 +44,6 @@ abstract class TestCase extends BaseTestCase
         if (empty($this->config)) {
             $this->loadTestDataConfig();
         }
-
-        $this->prefix = $this->get_container()->get('prefix');
         $this->mockHooks();
     }
 
