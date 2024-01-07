@@ -172,9 +172,11 @@ class Plugin
 
         foreach ( $subscribers as $subscriber ) {
             $subscriber_object = $this->container->get( $subscriber );
-            if ( $subscriber_object instanceof SubscriberInterface ) {
-                $this->container->get( 'event_manager' )->add_subscriber( $subscriber_object );
+            if ( ! $subscriber_object instanceof SubscriberInterface ) {
+                $subscriber_object = $this->subscriber_wrapper->wrap($subscriber_object);
             }
+
+            $this->container->get( 'event_manager' )->add_subscriber( $subscriber_object );
         }
     }
 
