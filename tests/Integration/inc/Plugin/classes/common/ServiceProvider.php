@@ -12,6 +12,13 @@ class ServiceProvider extends AbstractServiceProvider
      */
     protected function define()
     {
-        // TODO: Implement define() method.
+        $this->register_service(Subscriber::class);
+    }
+
+    public function get_common_subscribers(): array
+    {
+        return [
+          Subscriber::class
+        ];
     }
 }
