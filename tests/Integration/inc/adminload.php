@@ -10,8 +10,9 @@ use League\Container\Container;
 
 /**
  * @covers \LaunchpadCore\Plugin::load
+ * @group AdminOnly
  */
-class Test_load extends TestCase {
+class Test_adminload extends TestCase {
 
     /**
      * @var EventManager
@@ -20,18 +21,18 @@ class Test_load extends TestCase {
 
     public function testShouldDoAsExpected()
     {
-        $this->event_manager = new EventManager();
-
         $prefix = 'test';
 
+        $this->event_manager = new EventManager();
+
         $event_setup = [
+            'admin_hook',
             'common_hook',
-            'front_hook',
             'init_hook'
         ];
 
         $event_not_setup = [
-            'admin_hook'
+            'front_hook',
         ];
 
         $events =array_merge($event_setup, $event_not_setup);
@@ -60,8 +61,8 @@ class Test_load extends TestCase {
         }
 
         $actions = [
-          "{$prefix}before_load",
-          "{$prefix}after_load",
+            "{$prefix}before_load",
+            "{$prefix}after_load",
         ];
 
         $filters = [

@@ -176,7 +176,7 @@ class Plugin
                 $subscriber_object = $this->subscriber_wrapper->wrap($subscriber_object);
             }
 
-            $this->container->get( 'event_manager' )->add_subscriber( $subscriber_object );
+            $this->event_manager->add_subscriber( $subscriber_object );
         }
     }
 
@@ -217,7 +217,7 @@ class Plugin
                 $subscriber_object = $this->subscriber_wrapper->wrap($subscriber_object);
             }
 
-            $this->container->get( 'event_manager' )->add_subscriber( $subscriber_object );
+            $this->event_manager->add_subscriber( $subscriber_object );
         }
     }
 }
