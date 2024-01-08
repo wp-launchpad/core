@@ -4,6 +4,7 @@ namespace LaunchpadCore;
 
 use LaunchpadCore\Container\AbstractServiceProvider;
 use LaunchpadCore\Container\HasInflectorInterface;
+use LaunchpadCore\Container\PrefixAwareInterface;
 use LaunchpadCore\EventManagement\Wrapper\SubscriberWrapper;
 use Psr\Container\ContainerInterface;
 use LaunchpadCore\Container\IsOptimizableServiceProvider;
@@ -74,6 +75,8 @@ class Plugin
         add_filter( "{$this->container->get('prefix')}container", [ $this, 'get_container' ] );
 
         $this->container->share( 'event_manager', $this->event_manager );
+
+        $this->container->inflector(PrefixAwareInterface::class)->invokeMethod('set_prefix', [$this->container->get('prefix')]);
 
         $providers = array_map(function ($class) {
             if(is_string($class)) {

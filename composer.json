@@ -1,39 +1,41 @@
 {
-  "name": "wp-launchpad/core",
-  "description": "Core from Launchpad",
-  "keywords": [
-    "wordpress"
-  ],
-  "license": "GPL-2.0-or-later",
-  "authors": [
-    {
-      "name": "CrochetFeve0251"
+    "name": "wp-launchpad/core",
+    "description": "Core from Launchpad",
+    "keywords": [
+        "wordpress"
+    ],
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "CrochetFeve0251"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "LaunchpadCore\\": "inc/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LaunchpadCore\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "league/container": "^3.3"
+    },
+    "require-dev": {
+        "wp-media/phpunit": "^3.0",
+        "wp-launchpad/cli": "^1.0.2",
+        "wp-launchpad/phpunit-wp-hooks": "^1.0"
+    },
+    "scripts": {
+        "test-unit": "\"vendor/bin/phpunit\" --testsuite unit --colors=always --configuration tests/Unit/phpunit.xml.dist",
+        "test-integration": "\"vendor/bin/phpunit\" --testsuite integration --colors=always --configuration tests/Integration/phpunit.xml.dist --exclude-group AdminOnly,,,,,,,,,,,,,,,",
+        "test-integration-adminonly": "\"vendor/bin/phpunit\" --testsuite integration --colors=always --configuration tests/Integration/phpunit.xml.dist --group AdminOnly",
+        "run-tests": [
+            "@test-unit",
+            "@test-integration-"
+        ],
+        "test-integration-": "\"vendor/bin/phpunit\" --testsuite integration --colors=always --configuration tests/Integration/phpunit.xml.dist --group "
     }
-  ],
-  "autoload": {
-    "psr-4": {
-      "LaunchpadCore\\": "inc/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "LaunchpadCore\\Tests\\": "tests/"
-    }
-  },
-  "require": {
-    "league/container": "^3.3"
-  },
-  "require-dev": {
-    "wp-media/phpunit": "^3.0",
-    "wp-launchpad/cli": "^1.0.2",
-    "wp-launchpad/phpunit-wp-hooks": "^1.0"
-  },
-  "scripts": {
-    "test-unit": "\"vendor/bin/phpunit\" --testsuite unit --colors=always --configuration tests/Unit/phpunit.xml.dist",
-    "test-integration": "\"vendor/bin/phpunit\" --testsuite integration --colors=always --configuration tests/Integration/phpunit.xml.dist --exclude-group AdminOnly",
-    "test-integration-adminonly": "\"vendor/bin/phpunit\" --testsuite integration --colors=always --configuration tests/Integration/phpunit.xml.dist --group AdminOnly",
-    "run-tests": [
-      "@test-unit"
-    ]
-  }
 }

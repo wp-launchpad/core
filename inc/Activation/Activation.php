@@ -4,6 +4,7 @@ namespace LaunchpadCore\Activation;
 
 use LaunchpadCore\Container\AbstractServiceProvider;
 use LaunchpadCore\Container\HasInflectorInterface;
+use LaunchpadCore\Container\PrefixAwareInterface;
 use Psr\Container\ContainerInterface;
 
 class Activation
@@ -39,6 +40,8 @@ class Activation
         foreach (self::$params as $key => $value) {
             self::$container->add( $key, $value);
         }
+
+        $container->inflector(PrefixAwareInterface::class)->invokeMethod('set_prefix', [key_exists('prefix', self::$params) ? self::$params['prefix']: '']);
 
         $providers = array_filter(self::$providers, function ($provider) {
             if(is_string($provider)) {
