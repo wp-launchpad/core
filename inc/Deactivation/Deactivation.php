@@ -55,16 +55,16 @@ class Deactivation
             return $provider;
         });
 
-        foreach ($providers as $provider) {
-            $container->addServiceProvider($provider);
-        }
-
         $providers = array_map(function ($provider) {
             if(is_string($provider)) {
                 return new $provider();
             }
             return $provider;
         }, $providers);
+
+        foreach ($providers as $provider) {
+            $container->addServiceProvider($provider);
+        }
 
         foreach ( $providers as $service_provider ) {
             if( ! $service_provider instanceof HasInflectorInterface ) {
