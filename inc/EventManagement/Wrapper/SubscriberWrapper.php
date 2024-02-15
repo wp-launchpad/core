@@ -3,6 +3,7 @@
 namespace LaunchpadCore\EventManagement\Wrapper;
 
 use LaunchpadCore\EventManagement\SubscriberInterface;
+use Psr\Container\ContainerInterface;
 use ReflectionClass;
 
 class SubscriberWrapper
@@ -10,11 +11,19 @@ class SubscriberWrapper
 
     protected $prefix = '';
 
+
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
+
     /**
      * @param string $prefix
      */
-    public function __construct(string $prefix)
+    public function __construct(ContainerInterface $container, string $prefix)
     {
+        $this->container = $container;
         $this->prefix = $prefix;
     }
 
@@ -47,6 +56,6 @@ class SubscriberWrapper
             }
         }
 
-        return new WrappedSubscriber($object, $events);
+        return new WrappedSubscriber($this->container, $object, $events);
     }
 }

@@ -29,7 +29,7 @@ class Test_setPrefix extends TestCase {
 
         $container = new Container();
 
-        $plugin = new Plugin($container, $this->event_manager, new SubscriberWrapper($prefix));
+        $plugin = new Plugin($container, $this->event_manager, new SubscriberWrapper($container, $prefix));
         $plugin->load([
             'prefix' => $prefix,
             'version' => '3.16'

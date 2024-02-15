@@ -40,7 +40,9 @@ class Test_load extends TestCase {
             $this->assertFalse($this->event_manager->has_callback($event), $event);
         }
 
-        $plugin = new Plugin(new Container(), $this->event_manager, new SubscriberWrapper($prefix));
+        $container = new Container();
+
+        $plugin = new Plugin($container, $this->event_manager, new SubscriberWrapper($container, $prefix));
         $plugin->load([
             'prefix' => $prefix,
             'version' => '3.16'
