@@ -8,6 +8,7 @@ use League\Container\Container;
 use LaunchpadCore\Activation\Activation;
 use LaunchpadCore\Deactivation\Deactivation;
 use LaunchpadCore\EventManagement\EventManager;
+use League\Container\ReflectionContainer;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -63,11 +64,18 @@ function boot(string $plugin_launcher_file) {
             return;
         }
 
-
         $prefix = key_exists('prefix', $params) ? $params['prefix'] : '';
 
+        $container = new Container();
+
+        $has_reflection_as_fallback = key_exists( 'reflection_as_fallback', $params ) && $params['reflection_as_fallback'];
+
+        if ( $has_reflection_as_fallback ) {
+            $container->delegate( new ReflectionContainer() );
+        }
+
         $wp_rocket = new Plugin(
-            new Container(),
+            $container,
             new EventManager(),
             new SubscriberWrapper($prefix)
         );
