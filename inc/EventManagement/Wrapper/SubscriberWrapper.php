@@ -29,7 +29,7 @@ class SubscriberWrapper
             if ( ! $doc_comment ) {
                 continue;
             }
-            $pattern = "#@hook\s(?<name>[a-zA-Z\\\-_$]+)(\s(?<priority>[0-9]+))?#";
+            $pattern = "#@hook\s(?<name>[a-zA-Z\\\-_$/]+)(\s(?<priority>[0-9]+))?#";
 
             preg_match_all($pattern, $doc_comment, $matches, PREG_PATTERN_ORDER);
             if(! $matches) {
