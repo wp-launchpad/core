@@ -66,10 +66,12 @@ function boot(string $plugin_launcher_file) {
 
         $prefix = key_exists('prefix', $params) ? $params['prefix'] : '';
 
+        $container = new Container();
+
         $wp_rocket = new Plugin(
-            new Container(),
+            $container,
             new EventManager(),
-            new SubscriberWrapper($prefix)
+            new SubscriberWrapper($container, $prefix)
         );
 
         $wp_rocket->load( $params, $providers );
